@@ -1,10 +1,7 @@
-﻿
-
-
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
+// Martial Stage
 public class MartialStage{
 
     private double mpPerSec;
