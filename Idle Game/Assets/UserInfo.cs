@@ -5,14 +5,16 @@ using UnityEngine;
 public class UserInfo {
     
     private int gems;
-    private int coins;
+    private double meditationPower;
     private string userName;
+    private MartialStage martialStage;
 
-    public UserInfo(int gems, int coins, string userName)
+    public UserInfo(int gems, int meditationPower, string userName, MartialStage martialStage)
     {
         this.gems = gems;
-        this.coins = coins;
+        this.meditationPower = meditationPower;
         this.userName = userName;
+        this.martialStage = martialStage;
     }
     
     
@@ -20,11 +22,27 @@ public class UserInfo {
         return this.gems;
     }
 
-    public int getCoins(){
-        return this.coins;
+    public double getMeditationPower(){
+        return this.meditationPower;
+    }
+
+    public void meditationPowerAdd(double delta){
+        this.meditationPower += delta;
+    }
+
+    public void setMeditationPower(double meditationPower){
+        this.meditationPower = meditationPower;
     }
 
     public string getUserName(){
         return this.userName;
+    }
+
+    public MartialStage getMartialStage(){
+        return this.martialStage;
+    }
+
+    public void setMartialStage(MartialStage martialStage){
+        this.martialStage = martialStage;
     }
 }

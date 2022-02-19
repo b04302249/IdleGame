@@ -44,7 +44,7 @@ public class Skill
     }
 
     public string getUpgradeInformation(){
-        return "Cost: " + (this.level*2+1) + " coins\nPower: +1" ;
+        return "Cost: " + (this.level*2+1) + " mp\nPower: +1" ;
     }
 
     public string getAbilityInformation(){

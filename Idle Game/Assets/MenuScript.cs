@@ -18,8 +18,11 @@ public class MenuScript : MonoBehaviour
     public void newGame(){
         UserAccount userAccount = UserAccount.getInstance();
         
+        // set up martial stage, TODO: should move this information to server
+        MartialStage.initialMartialList();
+
         // set some information about account
-        UserInfo userInfo = new UserInfo(0, 0, "testUser");
+        UserInfo userInfo = new UserInfo(0, 0, "testUser", MartialStage.getStage(0));
         userAccount.setUserInfo(userInfo);
         
         // set up user character
