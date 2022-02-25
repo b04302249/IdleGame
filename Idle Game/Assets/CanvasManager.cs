@@ -7,33 +7,40 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameObject playCanvas;
     [SerializeField] private GameObject battleCanvas;
     [SerializeField] private GameObject rewardCanvas;
+    [SerializeField] private GameObject skillCanvas;
     
     public void setMenu(){
+        setAllFalse();
         menuCanvas.SetActive(true);
-        playCanvas.SetActive(false);
-        battleCanvas.SetActive(false);
-        rewardCanvas.SetActive(false);
     }
 
     public void setPlay(){
-        menuCanvas.SetActive(false);
+        setAllFalse();
         playCanvas.SetActive(true);
-        battleCanvas.SetActive(false);
-        rewardCanvas.SetActive(false);
     }
 
     public void setBattle(){
-        menuCanvas.SetActive(false);
-        playCanvas.SetActive(false);
+        setAllFalse();
         battleCanvas.SetActive(true);
-        rewardCanvas.SetActive(false);
     }
 
     public void setReward(){
+        setAllFalse();
+        battleCanvas.SetActive(true);
+        rewardCanvas.SetActive(true);
+    }
+
+    public void setSkill(){
+        setAllFalse();
+        skillCanvas.SetActive(true);
+    }
+    
+    private void setAllFalse(){
         menuCanvas.SetActive(false);
         playCanvas.SetActive(false);
-//        battleCanvas.SetActive(false);
-        rewardCanvas.SetActive(true);
+        battleCanvas.SetActive(false);
+        rewardCanvas.SetActive(false);
+        skillCanvas.SetActive(false);
     }
     
 }

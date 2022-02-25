@@ -18,6 +18,7 @@ public class RewardScript : MonoBehaviour{
 
     public void backToPlay(){
         this._canvasManager.setPlay();
+        Time.timeScale = 1f;
     }
     
     // Update is called once per frame

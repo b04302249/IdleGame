@@ -12,74 +12,100 @@ public class BattleScript : MonoBehaviour
     private CanvasManager _canvasManager;
     [SerializeField] private GameObject battleCanvas;
     
-    // ui for battle
+    //  self ui for battle
     public Image selfActionBar;
-    public Image enemyActionBar;
     public Text selfHealthPoint;
-    public Text selfEnergy;
     [SerializeField] private Text selfSkill_1Text;
     [SerializeField] private Text selfSkill_2Text;
+    [SerializeField] private Text selfSkill_3Text;
+    
+    // enemy ui for battle
+    public Image enemyActionBar;
     public Text enemyHealthPoint;
-    public Text enemyEnergy;
-    
-    
+    [SerializeField] private Text enemySkill_1Text;
+    [SerializeField] private Text enemySkill_2Text;
+    [SerializeField] private Text enemySkill_3Text;
+
+    // variable for battle
     private Character self;
     private Character enemy;
+    private float selfBattleHp;
     private float selfActionEnergy;
+    private float enemyBattleHp;
     private float enemyActionEnergy;
     
     // Start is called before the first frame update
     public void Start(){
         // set up canvas manager
         this._canvasManager = managerObject.GetComponent<CanvasManager>();
-        
-        // set up battle
-        this.selfActionEnergy = 0;
-        this.enemyActionEnergy = 0;
-        UserAccount userAccount = UserAccount.getInstance();
         this.battleCanvas.GetComponent<CanvasGroup>().alpha = 1f;
+
+        // set up character
+        this.self = UserAccount.getInstance().getUserCharacter();
+        this.enemy = new Character(5, 100, 3);
+        enemy.setSkill_1(SkillConstant.EMPTY_SKILL);
+        enemy.setSkill_2(SkillConstant.EMPTY_SKILL);
+        enemy.setSkill_3(SkillConstant.EMPTY_SKILL);
+        
+        // set up battle variable
+        this.selfBattleHp = self.getMaxHp();
+        this.selfActionEnergy = 0;
+        this.enemyBattleHp = enemy.getMaxHp();
+        this.enemyActionEnergy = 0;
+
+        
         
         // refresh skill ability
-        selfSkill_1Text.text = userAccount.getUserCharacter().getSkill_1().getAbilityInformation();
-        selfSkill_2Text.text = userAccount.getUserCharacter().getSkill_2().getAbilityInformation();
-
-        // hard code character here
-        Skill skill_1 = new Skill(8, -3);
-        Skill skill_2 = new Skill(30, 10);
-
-        this.self = userAccount.getUserCharacter();
-        this.enemy = new Character(100, 0, 3, skill_1, skill_2);
+        
+        
     }
 
-    public void useSkill_1(){
-        // if actionEnergy is not enough, then skill can not trigger
-        if (this.selfActionEnergy < ACTION_ENERGY_NEED)
-            return;
-        this.self.useSkill_1(enemy);
-        this.selfActionEnergy = 0;
+    private void attackEnemy(){
+        // basic attack
+        this.enemyBattleHp -= this.self.getBasicAttack();
+
+        // update UI
+        this.selfHealthPoint.text =  selfBattleHp.ToString() + " / " + self.getMaxHp().ToString();
+        this.enemyHealthPoint.text = enemyBattleHp.ToString() + " / " + enemy.getMaxHp().ToString();
     }
 
-    public void useSkill_2(){
-        if (this.selfActionEnergy < ACTION_ENERGY_NEED)
-            return;
-        this.self.useSkill_2(enemy);
-        this.selfActionEnergy = 0;
+    private void attackByEnemy(){
+        // basic attack
+        this.selfBattleHp -= enemy.getBasicAttack();
+
+        // update UI
+        this.selfHealthPoint.text =  selfBattleHp.ToString() + " / " + self.getMaxHp().ToString();
+        this.enemyHealthPoint.text = enemyBattleHp.ToString() + " / " + enemy.getMaxHp().ToString();
     }
+    
 
     // Update is called once per frame
     void Update()
     {
-        if (enemy.getHealthPoint() < 0)
+        if (enemyBattleHp < 0)
             endOfBattle();
-        if (this.selfActionEnergy >= ACTION_ENERGY_NEED)
-            return;
+        
+        // if user action energy full, then attack enemy
+        if (this.selfActionEnergy >= ACTION_ENERGY_NEED){
+            this.attackEnemy();
+            selfActionEnergy = 0;
+        }
+           
+        
+        // if enemy action energy full, then attack user
+        if (this.enemyActionEnergy >= ACTION_ENERGY_NEED){
+            this.attackByEnemy();
+            enemyActionEnergy = 0;
+        }
+           
+        
         this.selfActionEnergy += this.self.getSpeed() * Time.deltaTime;
         this.enemyActionEnergy += this.enemy.getSpeed() * Time.deltaTime;
 
-        this.selfHealthPoint.text =  self.getHealthPoint().ToString() + " / " + self.getMaxHp().ToString();
-        this.selfEnergy.text = self.getEnergy().ToString() + " / 50";
-        this.enemyHealthPoint.text = enemy.getHealthPoint().ToString() + " / " + enemy.getMaxHp().ToString();
-        this.enemyEnergy.text = enemy.getEnergy().ToString() + " / 50";
+        this.selfHealthPoint.text =  selfBattleHp.ToString() + " / " + self.getMaxHp().ToString();
+
+        this.enemyHealthPoint.text = enemyBattleHp.ToString() + " / " + enemy.getMaxHp().ToString();
+
 
         this.selfActionBar.fillAmount = (float)(selfActionEnergy / ACTION_ENERGY_NEED);
         this.enemyActionBar.fillAmount = (float)(enemyActionEnergy / ACTION_ENERGY_NEED);
@@ -87,6 +113,7 @@ public class BattleScript : MonoBehaviour
 
     private void endOfBattle(){
         this.battleCanvas.GetComponent<CanvasGroup>().alpha = 0.2f;
+        Time.timeScale = 0f;
         this._canvasManager.setReward();
 
     }

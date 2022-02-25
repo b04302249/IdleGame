@@ -1,56 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill
-{
-    private float power;
-    private float energyNeed;
-    private int level;
+public class Skill{
+    private float skillCost;
+    private SkillType skillType;
+    private string skillName;
+    private SkillRarity skillRarity;
+    private float triggerChance;
+    private float effect;
 
-    public Skill(float power, float energyNeed){
-        this.power = power;
-        this.energyNeed = energyNeed;
-        this.level = 1;
+
+    public Skill(float cost, SkillType type, string name, SkillRarity rarity, float chance, float effect){
+        this.skillCost = cost;
+        this.skillType = type;
+        this.skillName = name;
+        this.skillRarity = rarity;
+        this.triggerChance = chance;
+        this.effect = effect;
     }
 
-    public void setPower(float p){
-        this.power = p;
+    public float getEffect(){
+        return this.effect;
     }
 
-    public void setEnergyNeed(float en){
-        this.energyNeed = en;
+    public enum SkillRarity{
+        COMMON,
+        UN_COMMON,
+        RARE,
+        EPIC
+    }
+    
+    public enum SkillType{
+        NONE,
+        SKILL_1,
+        SKILL_2,
+        SKILL_3
     }
 
-    public float getPower(){
-        return this.power;
-    }
-
-    public float getEnergyNeed(){
-        return this.energyNeed;
-    }
-
-    public int levelUpCost(){
-        return this.level * 2 + 1;
-    }
-
-    public int getLevel(){
-        return this.level;
-    }
-
-    public void levelUp(){
-        this.level += 1;
-        this.power += 1;
-    }
-
-    public string getUpgradeInformation(){
-        return "Cost: " + (this.level*2+1) + " mp\nPower: +1" ;
-    }
-
-    public string getAbilityInformation(){
-        if (this.energyNeed > 0f)
-            return "Power:" + this.power + "\nEnergy" + (-this.energyNeed);
-        else
-            return "Power:" + this.power + "\nEnergy+" + (-this.energyNeed);
-    }
 }
+
+
