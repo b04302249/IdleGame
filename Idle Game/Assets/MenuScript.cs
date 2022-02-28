@@ -29,9 +29,9 @@ public class MenuScript : MonoBehaviour
         //Skill skill_1 = new Skill(8, -3);
         //Skill skill_2 = new Skill(30, 10);
         Character userChar = new Character(15, 100,  5);
-        userChar.setSkill_1(SkillConstant.EMPTY_SKILL);
-        userChar.setSkill_2(SkillConstant.EMPTY_SKILL);
-        userChar.setSkill_3(SkillConstant.EMPTY_SKILL);
+        userChar.setSkill_1(SkillConstant.SKILL_1A);
+        userChar.setSkill_2(SkillConstant.SKILL_2A);
+        userChar.setSkill_3(SkillConstant.SKILL_3A);
         userAccount.setUserCharacter(userChar);
         
         this._canvasManager.setPlay();

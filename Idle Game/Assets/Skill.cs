@@ -21,6 +21,10 @@ public class Skill{
         this.effect = effect;
     }
 
+    public string getSkillName(){
+        return this.skillName;
+    }
+    
     public float getEffect(){
         return this.effect;
     }

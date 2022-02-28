@@ -9,16 +9,12 @@ public class PlayScript : MonoBehaviour
 {
     
     // ui for play canvas
-    public Text mpText;
-    [SerializeField] private Text skill1UpgradeText;
-    [SerializeField] private Text skill2UpgradeText;
-    [SerializeField] private Text skill1EffectText;
-    [SerializeField] private Text skill2EffectText;
-    public Text MPPerSecondText;
-    public Text accumulateText;
-    public Text MartialCurrentStageText;
-    public Text MartialNextStageText;
-    public Text MPRequiredNextText;
+    [SerializeField] private Text mpText;
+    [SerializeField] private Text MPPerSecondText;
+    [SerializeField] private Text accumulateText;
+    [SerializeField] private Text MartialCurrentStageText;
+    [SerializeField] private Text MartialNextStageText;
+    [SerializeField] private Text MPRequiredNextText;
 
     // variable in play canvas
     private UserInfo userInfo;
@@ -32,14 +28,7 @@ public class PlayScript : MonoBehaviour
         this.userInfo = _userAccount.getUserInfo();
 
         // set up skill information
-        /*
-        Skill skill_1 = _userAccount.getUserCharacter().getSkill_1();
-        skill1UpgradeText.text = "Upgrade Skill-1\n" + skill_1.getUpgradeInformation();
-        skill1EffectText.text = skill_1.getAbilityInformation();
-        Skill skill_2 = _userAccount.getUserCharacter().getSkill_2();
-        skill2UpgradeText.text = "Upgrade Skill-2\n" + skill_2.getUpgradeInformation();
-        skill2EffectText.text = skill_2.getAbilityInformation();
-        */
+
         
         // set up martial stage information
         MartialStage stage = userInfo.getMartialStage();

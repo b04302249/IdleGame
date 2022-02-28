@@ -43,21 +43,25 @@ public class BattleScript : MonoBehaviour
         // set up character
         this.self = UserAccount.getInstance().getUserCharacter();
         this.enemy = new Character(5, 100, 3);
-        enemy.setSkill_1(SkillConstant.EMPTY_SKILL);
-        enemy.setSkill_2(SkillConstant.EMPTY_SKILL);
-        enemy.setSkill_3(SkillConstant.EMPTY_SKILL);
+        enemy.setSkill_1(SkillConstant.SKILL_1A);
+        enemy.setSkill_2(SkillConstant.SKILL_2A);
+        enemy.setSkill_3(SkillConstant.SKILL_3A);
         
         // set up battle variable
         this.selfBattleHp = self.getMaxHp();
         this.selfActionEnergy = 0;
         this.enemyBattleHp = enemy.getMaxHp();
         this.enemyActionEnergy = 0;
+        
+        // set up skill UI
+        this.selfSkill_1Text.text = self.getSkill_1().getSkillName();
+        this.selfSkill_2Text.text = self.getSkill_2().getSkillName();
+        this.selfSkill_3Text.text = self.getSkill_3().getSkillName();
+        this.enemySkill_1Text.text = enemy.getSkill_1().getSkillName();
+        this.enemySkill_2Text.text = enemy.getSkill_2().getSkillName();
+        this.enemySkill_3Text.text = enemy.getSkill_3().getSkillName();
 
-        
-        
-        // refresh skill ability
-        
-        
+
     }
 
     private void attackEnemy(){
